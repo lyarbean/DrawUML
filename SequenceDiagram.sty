@@ -1,0 +1,33 @@
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{SequenceDiagram}[2012/12/17 v0.1 DrawUML Sequence Diagrams.]
+
+\RequirePackage{tikz}
+\usetikzlibrary{arrows,shadows}
+
+\def\rowscale{1em}
+\def\columnscale{5em}
+
+\tikzstyle{lifelinestyle}=[rectangle, draw, 
+    minimum height=1.5em, minimum width=3em, fill=white,
+drop shadow={opacity=.5,fill=black}]
+%% \lifeline[row]{column}{name}{:class}
+\newcommand{\lifeline}[4][0]{
+    \path (#2*\columnscale,-#1*\rowscale) node [lifelinestyle] (lifeline#1#2)
+    {#3#4};
+}
+
+% \messageTo{row}{from}{to}{message}
+\newcommand{\messageTo}[4]{
+    \path (0,-#1*\rowscale)+(#2) node (message#1#2) {}
+    (0,-#1*\rowscale)+(#3) node (message#1#3) {};
+    \draw[->,>=angle 60] (message#1#2)--(message#1#3)
+    node [midway, above] {#4};
+}
+
+\newcommand{\messageSelf}[3]{
+
+}
+
+\newcommand{\messageToReturn}[5]{
+
+}
