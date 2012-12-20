@@ -1,21 +1,24 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{SequenceDiagram}[2012/12/17 v0.1 DrawUML Sequence Diagrams.]
-
 \RequirePackage{tikz}
 \usetikzlibrary{arrows,shadows}
 
-\def\rowscale{1em}
-\def\columnscale{5em}
+\def\rowscale{1}
+\def\columnscale{1}
 
 \tikzstyle{lifelinestyle}=[rectangle, draw, 
-    minimum height=1.5em, minimum width=3em, fill=white,
+    inner sep=0.5em, fill=white,
 drop shadow={opacity=.5,fill=black}]
 %% \lifeline[row]{column}{name}{:class}
 \newcommand{\lifeline}[4][0]{
-    \path (#2*\columnscale,-#1*\rowscale) node [lifelinestyle] (lifeline#1#2)
-    {#3#4};
+    \path (#2*\columnscale,-#1*\rowscale) node[lifelinestyle] (lifeline#1#2){#3#4};
 }
 
+%% \lifelineend{ll_row}{ll_column}{end_row}
+\newcommand{\lifelineend}[3]{
+    \path (#2*\columnscale,-#3*\rowscale) node (end){};
+    \draw [dashed, very thick, gray] (lifeline#1#2) -- (end);
+}
 % \messageTo{row}{from}{to}{message}
 \newcommand{\messageTo}[4]{
     \path (0,-#1*\rowscale)+(#2) node (message#1#2) {}
